@@ -5,15 +5,20 @@ use Scalar::Util qw(looks_like_number);
 use warnings;
 use strict;
 use overload
-	'""' => 'print_date',
+	'""' => 'get_formated_date',
 	'+' => 'add_days',
 	'<=>' => 'leqg_date',
-	'-' => 'substract_date'
+	'-' => 'substract_date',
+	'eq' => 'eq_test_date'
 	;
 
 our @months = (0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
 
-my $is_leap_year = sub {
+
+sub eq_test_date {
+	my ($d1, $d2) = @_;
+	return ("$d1" cmp "$d2") == 0;
+}my $is_leap_year = sub {
 	my $year = $_[0];
 	($year % 4 == 0 && $year % 100 != 0) || $year % 400 == 0; 
 };
@@ -64,16 +69,18 @@ sub new {
 	bless $self, $class;
 }
 
-sub print_date {
-	return get_formated_date($_[0]);}
 
+sub set_date {
+	my ($self, @date) = @_;
+	$self = Date->new(@date);
+	$self;}
 sub get_formated_date {
 	my $d = $_[0]; 
 	my $s =  $d->{_day} . '.';
 	$s .= $d->{_month} < 10 ? '0' . $d->{_month} : $d->{_month};
 	return $s . '.' . $d->{_year};
 }
-sub substract_date { # returns num of days
+sub substract_date {
 	my ($d1, $d2) = @_;
 	return $days_in_date->($d1) - $days_in_date->($d2);
 }

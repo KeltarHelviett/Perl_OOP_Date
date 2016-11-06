@@ -33,21 +33,11 @@ subtest 'Date addition/substraction/printing' => sub {
 };
 
 subtest 'Date day_of_week' => sub {
-	is $date2->day_of_week(), 'Sunday', 'Date day_of_week 1';
-	$date2 = $date2 + 1;
-	is $date2->day_of_week(), 'Monday', 'Date day_of_week 2';
-	$date2 = $date2 + 1;
-	is $date2->day_of_week(), 'Tuesday', 'Date day_of_week 2';
-	$date2 = $date2 + 1;
-	is $date2->day_of_week(), 'Wednesday', 'Date day_of_week 2';
-	$date2 = $date2 + 1;
-	is $date2->day_of_week(), 'Thursday', 'Date day_of_week 2';
-	$date2 = $date2 + 1;
-	is $date2->day_of_week(), 'Friday', 'Date day_of_week 2';
-	$date2 = $date2 + 1;
-	is $date2->day_of_week(), 'Saturday', 'Date day_of_week 2';
-	$date2 = $date2 + 1;
-	is $date2->day_of_week(), 'Sunday', 'Date day_of_week 2';
+	my @mnth = ('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
+	for my $i (0..100){		
+		is $date2->day_of_week(), $mnth[$i % 7], 'Date day_of_week $i';
+		$date2 = $date2 + 1;
+	}
 };
 
 done_testing();
